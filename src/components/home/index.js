@@ -7,6 +7,7 @@ import { setSearchResults } from '../../store/reducers';
 import Button from '../generalComponents/button';
 import Card from '../generalComponents/card';
 import SearchBar from '../generalComponents/searchBar';
+import auth from '@react-native-firebase/auth'
 
 const Home = () => {
     const [inputSearch, setInputSearch] = useState('')
@@ -27,12 +28,21 @@ const Home = () => {
             Alert.alert(err.message)
         }
     }
-    console.log(moviesResults)
+
+    const handleLogout = async () => {
+        try {
+            await auth().signOut()
+            dispatch(setSearchResults([]))
+        } catch (err) {
+            console.error(err)
+            Alert.alert(err.message)
+        }
+    }
 
     return (
         <View style={styles.home__container}>
             <View style={styles.home__header}>
-                <Button style={styles.header__logout}>
+                <Button onPress={handleLogout} style={styles.header__logout}>
                     Logout
                 </Button>
                 <Text style={styles.header__title}>
