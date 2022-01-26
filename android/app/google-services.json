@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "266960911971",
+    "project_id": "effectus-8847b",
+    "storage_bucket": "effectus-8847b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266960911971:android:705fe191bee4107fe48256",
+        "android_client_info": {
+          "package_name": "com.effectus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "266960911971-72qmb8kpf4fa9ahfl7g29ltn917pq71k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.effectus",
+            "certificate_hash": "3252e851b1fe9ab20368fe233abe49bd16d62b7e"
+          }
+        },
+        {
+          "client_id": "266960911971-p58o872qccun5ecsahi78tr4ccumvt9j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfBI9VKsB8UWCIQZnCtKGRQMZKqo-pkoc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "266960911971-p58o872qccun5ecsahi78tr4ccumvt9j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
