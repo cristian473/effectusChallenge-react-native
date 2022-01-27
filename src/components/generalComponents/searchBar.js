@@ -36,6 +36,7 @@ const SearchBar = ({onChangeText, value, handleSearch}) => {
                 onSubmitEditing={handleSearchPress}                     
                 value={value}   
                 ref={inputRef}
+                selectionColor={'#000'}
             />
             {inputIsFocused && (
                 keyPressed === 'Backspace' ? 

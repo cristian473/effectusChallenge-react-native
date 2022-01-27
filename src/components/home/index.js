@@ -124,5 +124,6 @@ const styles = StyleSheet.create({
     },
     home__noMovies_text: {
         fontSize: 20,
+        color: '#000'
     }
 })
