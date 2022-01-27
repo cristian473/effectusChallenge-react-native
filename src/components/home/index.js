@@ -30,7 +30,6 @@ const Home = () => {
         } catch (err) {
             console.error(err)
             setLoading(false)
-
             Alert.alert(err.message)
         }
     }
@@ -62,7 +61,7 @@ const Home = () => {
             </View>   
             {loading && (
                  <View style={styles.home__noMovies_container}>
-                    <ActivityIndicator size={'large'} />
+                    <ActivityIndicator size={'large'} color='#000'/>
                 </View>
             )}         
             {!loading && moviesResults.length > 0 && (
@@ -109,13 +108,14 @@ const styles = StyleSheet.create({
             right: 15,
         },
         text: {
-            color: 'black',
+            color: '#000',
             fontSize: 17
         }
     },  
     header__title:{
         fontSize: 40,
-        color: 'black'
+        color: '#000',
+        marginVertical: 10
     },
     home__noMovies_container: {
         flex: 8,

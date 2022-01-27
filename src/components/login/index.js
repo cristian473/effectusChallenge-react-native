@@ -41,12 +41,14 @@ const Login = () => {
                 <TextInput 
                     onChange={handleInputChange('email')} 
                     placeholder="Email" 
+                    placeholderTextColor="#979797" 
                     style={styles.login__input}
                     value={form.email}
                 />
                 <TextInput 
                     onChange={handleInputChange('password')} 
                     placeholder="Password" 
+                    placeholderTextColor="#979797" 
                     secureTextEntry={true}
                     style={styles.login__input}
                     value={form.password}
@@ -54,7 +56,7 @@ const Login = () => {
             </View>
             <View style={styles.login__button_container}>
                 {loading ? 
-                    <ActivityIndicator size={'large'} color='black'/>
+                    <ActivityIndicator size={'large'} color='#000'/>
                     :
                     <Button onPress={handleLogin} style={styles.login__button}>
                         Login
@@ -94,20 +96,21 @@ const styles = StyleSheet.create({
         width: '70%',
     },  
     login__input:{
-        borderBottomColor: 'black',
+        borderBottomColor: '#000',
         borderBottomWidth: 1,
         width: '80%',
         paddingBottom: 5,
         height: 40,
         marginVertical: 8,
-        fontSize: 18
+        fontSize: 18,
+        color: '#000'
     },
     login__button:{
         button: {
             marginVertical: 10,            
             padding: 10,
             alignItems: 'center',
-            backgroundColor: 'black',
+            backgroundColor: '#000',
             width: 230,
             borderRadius: 20
         },

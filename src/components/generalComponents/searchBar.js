@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     searchbar__icon: {
         position: 'absolute',
         fontSize: 30,
-        color:"black",
+        color: '#000',
         right: 10,
         top: 8
     },
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
         padding: 10,
         fontSize: 20,
         paddingHorizontal: 17,
-        borderRadius: 10
+        borderRadius: 10,
+        color: '#000'
     }
 })
