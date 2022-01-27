@@ -26,7 +26,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{flex: 1, backgroundColor: '#ffff'}}>
         {loged ? <Home/> : <Login/>}
       </SafeAreaView>
     </Provider>
