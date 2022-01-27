@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { Text, View, StyleSheet, Alert, ScrollView} from 'react-native';
+import { Text, View, StyleSheet, Alert, ScrollView, ActivityIndicator, KeyboardAvoidingView} from 'react-native';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setSearchResults } from '../../store/reducers';
@@ -8,23 +8,29 @@ import Button from '../generalComponents/button';
 import Card from '../generalComponents/card';
 import SearchBar from '../generalComponents/searchBar';
 import auth from '@react-native-firebase/auth'
+import {RAPID_API_KEY} from '@env';
 
 const Home = () => {
-    const [inputSearch, setInputSearch] = useState('')
     const moviesResults = useSelector((state) => state.movies.searchResults)
+    const [inputSearch, setInputSearch] = useState('')
+    const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
-    
     const handleSearch = async () => {
-        try {
+        try {         
+            setLoading(true)  
+            if(!inputSearch) return dispatch(setSearchResults([]))
             const url = `https://imdb8.p.rapidapi.com/auto-complete?q=${inputSearch}`
             const headers = {
                 'x-rapidapi-host': 'imdb8.p.rapidapi.com',
-                'x-rapidapi-key': '1fb6e36c67msh21f0172f72c0d9ep1da4b1jsn335cbb44d2b3'
+                'x-rapidapi-key': RAPID_API_KEY
             }
             const res = await axios.get(url, {headers})
             dispatch(setSearchResults(res.data.d))
+            setLoading(false)
         } catch (err) {
             console.error(err)
+            setLoading(false)
+
             Alert.alert(err.message)
         }
     }
@@ -53,19 +59,30 @@ const Home = () => {
                     onChangeText={setInputSearch}
                     handleSearch={handleSearch}
                 />
-            </View>
-            {moviesResults.length > 0 ? (
-                <ScrollView style={styles.home__listMovies}>
-                    {moviesResults.map((film) => (
-                        <Card
-                            title={film.l}
-                            image={film.i?.imageUrl}
-                        />
-                    ))}
-                </ScrollView>
-            ): (
-                <View>
-                    <Text>No movies, look for some</Text>
+            </View>   
+            {loading && (
+                 <View style={styles.home__noMovies_container}>
+                    <ActivityIndicator size={'large'} />
+                </View>
+            )}         
+            {!loading && moviesResults.length > 0 && (
+                <View style={{flex: 8}}>
+                    <ScrollView contentContainerStyle={styles.home__listMovies}>
+                        {moviesResults.map((film, i) => (
+                            <Card
+                                key={i}
+                                title={film.l}
+                                image={{uri: film.i?.imageUrl}}
+                            />
+                        ))}
+                    </ScrollView>
+                </View>
+            )} 
+            {!loading && moviesResults.length === 0 && (
+                <View style={styles.home__noMovies_container}>
+                    <Text style={styles.home__noMovies_text}>
+                        No movies, look for some
+                    </Text>
                 </View>
             )}
         </View>
@@ -80,10 +97,11 @@ const styles = StyleSheet.create({
     },
     home__header:{
         flex: 2,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     home__listMovies:{
-        flex: 8
+        flexGrow: 1,
+        alignItems: 'center'
     },
     header__logout:{
         button: {
@@ -98,5 +116,13 @@ const styles = StyleSheet.create({
     header__title:{
         fontSize: 40,
         color: 'black'
-    }    
+    },
+    home__noMovies_container: {
+        flex: 8,
+        justifyContent:'center',
+        alignItems:'center',
+    },
+    home__noMovies_text: {
+        fontSize: 20,
+    }
 })

@@ -10,6 +10,8 @@ import React, { useEffect, useState } from 'react';
 import {store} from './src/store'
 import { Provider } from 'react-redux'
 import {
+  KeyboardAvoidingView,
+  Platform,
   SafeAreaView, View,
 } from 'react-native';
 import Login from './src/components/login';

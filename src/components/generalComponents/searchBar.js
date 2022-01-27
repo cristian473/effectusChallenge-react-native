@@ -2,9 +2,11 @@ import React, { useRef, useState } from 'react'
 import { StyleSheet, TextInput, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+let timeoutId = 0
+
 const SearchBar = ({onChangeText, value, handleSearch}) => {
     const [inputIsFocused, setInputIsFocused] = useState(false)
-    const [keyPressed, setKeyPressed] = useState('')
+    const [keyPressed, setKeyPressed] = useState('')    
     const inputRef = useRef()
 
     const handleCrossPress = () => {
@@ -17,6 +19,12 @@ const SearchBar = ({onChangeText, value, handleSearch}) => {
         inputRef.current.blur()
     }
 
+    const handleKeyPress = ({nativeEvent: {key}}) => {
+        clearTimeout(timeoutId)
+        setKeyPressed(key)
+        timeoutId = setTimeout(() => setKeyPressed(''), 1000)
+    }
+
     return (
         <View style={styles.searchbar__container}>
             <TextInput 
@@ -24,7 +32,8 @@ const SearchBar = ({onChangeText, value, handleSearch}) => {
                 onBlur={() => setInputIsFocused(false)}
                 style={styles.header__search}        
                 onChangeText={onChangeText}        
-                onKeyPress={(e) => setKeyPressed(e.nativeEvent.key)}         
+                onKeyPress={handleKeyPress}    
+                onSubmitEditing={handleSearchPress}                     
                 value={value}   
                 ref={inputRef}
             />
@@ -64,7 +73,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#bec4d0',
         width: '95%',
         padding: 10,
-        paddingHorizontal: 20,
+        fontSize: 20,
+        paddingHorizontal: 17,
         borderRadius: 10
     }
 })

@@ -1,19 +1,22 @@
 import React from "react";
 import { useState } from "react";
-import { View, TextInput, StyleSheet, Image, Text, Alert } from "react-native";
+import { View, TextInput, StyleSheet, Image, Text, Alert, KeyboardAvoidingView, ActivityIndicator } from "react-native";
 import Button from "../generalComponents/button";
 import EffectusIcon from '../../assets/images/effectusIcon.png'
 import auth from '@react-native-firebase/auth';
 
 const Login = () => {
     const [form, setForm] = useState({ email: "", password: "" });
+    const [loading, setLoading] = useState(false)
 
     const handleLogin = async () => {
         try {
+            setLoading(true)
             await auth().signInWithEmailAndPassword(form.email, form.password)
         } catch (error) {
-            console.log(error)
-            Alert.alert(error.message)
+            setLoading(false)
+            const errorMessage = JSON.stringify(error.message).replace(`[${error.code}]`, '')
+            Alert.alert('Error', errorMessage.replace(/"/g, ''))
         }
     };
 
@@ -22,7 +25,12 @@ const Login = () => {
     }
 
     return (
-        <View style={styles.login__container}>
+        <KeyboardAvoidingView 
+            style={styles.login__container}
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={Platform.OS == "ios" ? 0 : 20}
+            enabled={Platform.OS === "ios" ? true : false}
+        >
             <View style={styles.login__image_container}>
                 <Image 
                     style={styles.login__image}
@@ -45,11 +53,15 @@ const Login = () => {
                 />
             </View>
             <View style={styles.login__button_container}>
-                <Button onPress={handleLogin} style={styles.login__button}>
-                    Login
-                </Button>
+                {loading ? 
+                    <ActivityIndicator size={'large'} color='black'/>
+                    :
+                    <Button onPress={handleLogin} style={styles.login__button}>
+                        Login
+                    </Button>
+                }
             </View>
-        </View>
+        </KeyboardAvoidingView>
     );
 };
 
@@ -73,7 +85,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 3
+        flex: 2
     },   
     login__image: {
         flex: 1,
